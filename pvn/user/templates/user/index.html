@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content%}
+<div class="card" style="width: 18rem;">
+    <ul class="list-group list-group-flush">
+        {% if not request.user.is_authenticated %}
+        <li class="list-group-item">
+            <a href="{% url 'register' %}">Регистрация</a> / <a href="{% url 'login' %}">Авторизация</a>
+        </li>
+        {% endif %}
+        <li class="list-group-item"><a href="#">API</a></li>
+        <li class="list-group-item"><a href="#">Администратор</a></li>
+    </ul>
+</div>
+{% endblock %}
