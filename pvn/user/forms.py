@@ -33,7 +33,7 @@ class RegistrationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
     phone_number = PhoneNumberField(required=False)
     email = forms.EmailField(required=True)
-    captcha = ReCaptchaField()
+    # captcha = ReCaptchaField()
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -42,7 +42,7 @@ class RegistrationForm(forms.ModelForm):
         self.fields['confirm_password'].label = 'Подтвердите пароль'
         self.fields['phone_number'].label = 'Номер телефона'
         self.fields['email'].label = 'Email'
-        self.fields['captcha'].label = ''
+        # self.fields['captcha'].label = ''
 
     def clean_email(self):
         email = self.cleaned_data['email']
