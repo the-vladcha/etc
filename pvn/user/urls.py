@@ -7,6 +7,7 @@ from .views import (
     RegistrationView,
     LoginView,
     VerificationView,
+    taskDetail,
 )
 
 urlpatterns = [
@@ -15,6 +16,8 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(next_page='/'), name='logout'),
 
     path('', index, name='home'),
+
+    path('api/<str:username>/', taskDetail, name='task-detail'),
 
     path('activate/<uidb64>/<token>/', VerificationView.as_view(), name='activate'),
 

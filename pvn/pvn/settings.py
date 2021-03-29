@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'user.apps.UserConfig',
     'phonenumber_field',
     'captcha',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

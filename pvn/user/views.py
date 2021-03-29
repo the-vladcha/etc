@@ -16,6 +16,10 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.sites.shortcuts import get_current_site
 from .utils import account_activation_token
 
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .serializers import UserSerializers
+
 
 class LoginView(View):
 
@@ -103,3 +107,10 @@ class VerificationView(View):
 
 def index(request):
     return render(request, template_name='user/index.html')
+
+
+@api_view(['GET'])
+def taskDetail(request, username):
+    task = User.objects.get(username=username)
+    serializer = UserSerializers(task, many=False)
+    return Response(serializer.data)
