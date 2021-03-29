@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 class MyUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     phone_number = PhoneNumberField(null=False, blank=False, unique=True, verbose_name='Телефон')
+    confirm_email = models.BooleanField(default=False, verbose_name='Пользователь подтвержден')
 
     def __str__(self):
         return self.user.username

@@ -1,8 +1,22 @@
 {% extends 'base.html' %}
 
+
 {% block content%}
-<div class="card" style="width: 18rem;">
-    <ul class="list-group list-group-flush">
+
+{% if not request.user.myuser.confirm_email and request.user.is_authenticated %}
+<div class="position-relative">
+    <div class="position-absolute top-0 start-50 translate-middle">
+        <figure class="text-center">
+            <div class="alert alert-warning" role="alert" style="width: 30rem;">
+                Зайдите на Email для подтверждения регистрации!
+            </div>
+        </figure>
+    </div>
+</div>
+{% endif %}
+
+<div class="card" style="width: 18rem; background-color: #c8e5fa;">
+    <ul class="list-group">
         {% if not request.user.is_authenticated %}
         <li class="list-group-item">
             <a href="{% url 'register' %}">Регистрация</a> / <a href="{% url 'login' %}">Авторизация</a>
@@ -12,4 +26,6 @@
         <li class="list-group-item"><a href="#">Администратор</a></li>
     </ul>
 </div>
+
+
 {% endblock %}

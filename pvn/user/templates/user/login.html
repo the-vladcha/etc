@@ -1,12 +1,21 @@
 {% extends 'base.html' %}
 
+{% block title %}Авторизация :: TC{% endblock %}
+
 {% block content %}
+<div class="position-relative">
+    <div class="position-absolute top-0 start-50 translate-middle-x">
+        <div class="card p-3" style="width: 30rem; background-color: #c8e5fa;">
 
-<h1>Авторизация</h1>
+            <h1>Авторизация</h1>
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary btn-block">Войти</button>
-</form>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary btn-block">Войти</button>
+            </form>
+
+        </div>
+    </div>
+</div>
 {% endblock %}

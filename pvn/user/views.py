@@ -51,12 +51,14 @@ class RegistrationView(View):
             new_user.email = form.cleaned_data['email']
             new_user.save()
             new_user.set_password(form.cleaned_data['password'])
-            new_user.is_active = False
             new_user.save()
             MyUser.objects.create(
                 user=new_user,
                 phone_number=form.cleaned_data['phone_number'],
             )
+
+            user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
+            login(request, user)
 
             domain = get_current_site(request).domain
             uidb64 = urlsafe_base64_encode(force_bytes(new_user.pk))
@@ -64,8 +66,8 @@ class RegistrationView(View):
             link = reverse('activate',
                            kwargs={'uidb64': uidb64, 'token': account_activation_token.make_token(new_user)})
             activate_url = 'http://' + domain + link
-            email_subject = 'Активация аккаунта'
-            email_body = 'Привет ' + new_user.username + ' быстро подтведи регистрацию!\n' + activate_url
+            email_subject = 'Подтверждение аккаунта'
+            email_body = 'Привет ' + new_user.username + ' . Чтобы подтвердить регистарацию - перейдите по ссылке:\n' + activate_url
             email = EmailMessage(
                 email_subject,
                 email_body,
@@ -85,15 +87,14 @@ class VerificationView(View):
             user = User.objects.get(pk=id)
 
             if not account_activation_token.check_token(user, token):
-                return redirect('login' + '?message=' + 'User already activated')
+                return redirect('home' + '?message=' + 'Пользователь уже подтвержден')
 
-            if user.is_active:
-                return redirect('login')
-            user.is_active = True
-            user.save()
+            if user.myuser.confirm_email:
+                return redirect('home')
+            user.myuser.confirm_email = True
+            user.myuser.save()
 
-            messages.success(request, 'Account activated successfully')
-            return redirect('login')
+            return redirect('home')
 
         except Exception as ex:
             pass

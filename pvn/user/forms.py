@@ -5,12 +5,15 @@ from captcha.fields import ReCaptchaField
 
 
 class LoginForm(forms.ModelForm):
+    username = forms.CharField(help_text='')
     password = forms.CharField(widget=forms.PasswordInput)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['username'].label = 'Логин'
         self.fields['password'].label = 'Пароль'
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form-control'
 
     def clean(self):
         username = self.cleaned_data['username']
@@ -29,11 +32,12 @@ class LoginForm(forms.ModelForm):
 
 
 class RegistrationForm(forms.ModelForm):
+    username = forms.CharField(help_text='')
     confirm_password = forms.CharField(widget=forms.PasswordInput)
     password = forms.CharField(widget=forms.PasswordInput)
     phone_number = PhoneNumberField(required=False)
     email = forms.EmailField(required=True)
-    # captcha = ReCaptchaField()
+    captcha = ReCaptchaField()
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -42,7 +46,9 @@ class RegistrationForm(forms.ModelForm):
         self.fields['confirm_password'].label = 'Подтвердите пароль'
         self.fields['phone_number'].label = 'Номер телефона'
         self.fields['email'].label = 'Email'
-        # self.fields['captcha'].label = ''
+        self.fields['captcha'].label = ''
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form-control'
 
     def clean_email(self):
         email = self.cleaned_data['email']
