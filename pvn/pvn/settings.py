@@ -126,6 +126,6 @@ RECAPTCHA_PRIVATE_KEY = '6LcpP5EaAAAAAMaSWHcqnKHZAVcBmwzDx6HYw6e3'
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587  # 2525
-EMAIL_HOST_USER = 'porokhov.vlad@gmail.com'
-EMAIL_HOST_PASSWORD = 'tOxmItOx1823'
+EMAIL_HOST_USER = 'porokhov.vlad@gmail.com'     # Write here your email (google)
+EMAIL_HOST_PASSWORD = 'your email'              # Write here your password
 EMAIL_USE_TLS = True
